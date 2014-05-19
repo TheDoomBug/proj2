@@ -47,6 +47,43 @@ Box::Box(string passwd, Date date) :currentDate(date){
 
 }
 
+vector<Program> Box::listByDay(string day) const {
+
+	vector<Program> vec;
+
+	for (unsigned i = 0; i < channels.size(); i++)
+	for (unsigned j = 0; j < channels[i].getPrograms.size(); j++)
+	if (channels[i].getPrograms()[j].getExhibitionDate().getDay() == day)
+		vec.push_back(channels[i].getPrograms()[j]);
+
+	return vec;
+}
+vector<Program> Box::listByChannel(string channel, string day) const {
+
+	vector<Program> vec;
+
+	for (unsigned i = 0; i < channels.size(); i++)
+	if (channels[i].getName() == channel)
+	{
+		for (unsigned j = 0; i < channels[i].getPrograms.size(); i++)
+		if (day == "NULL" || channels[i].getPrograms()[j].getExhibitionDate().getDay() == day)
+			vec.push_back(channels[i].getPrograms()[j]);
+	}
+	return vec;
+}
+
+vector<Program> Box::listByType(string type, string day) const {
+	vector<Program> vec;
+
+	for (unsigned i = 0; i < channels.size(); i++)
+	for (unsigned j = 0; j < channels[i].getPrograms().size(); j++)
+	if (channels[i].getPrograms()[j].getType() == type)
+	if (day == "NULL" || channels[i].getPrograms()[j].getExhibitionDate().getDay() == day)
+		vec.push_back(channels[i].getPrograms()[j]);
+
+	return vec;
+}
+
 vector <Channel> vecchan(int n)
 {
 	ifstream cria;
@@ -304,7 +341,6 @@ bool Box::removeProgram() {
 	return false;
 }
 
-/*
 bool Box::updateProgram()
 {
 
@@ -312,6 +348,10 @@ bool Box::updateProgram()
 	string channelName;
 	string newName;
 	unsigned choice;
+	unsigned newduration;
+	string newDay;
+	unsigned int newHour;
+	unsigned int newMinutes;
 
 	cout << "O que pretende alterar? ";
 	cout << endl << endl << "1- Nome";
@@ -339,13 +379,63 @@ bool Box::updateProgram()
 		if (channels[i].getPrograms()[j].getName() == oldName) {
 			if (choice == 1)
 			{
-				channels[i].getPrograms()[j].
+				cout << endl << "Insira o novo nome do canal: ";
+				cin >> newName;
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore();
+					return false;
+				}
+				channels[i].getPrograms()[j].setName(newName);
+				return true;
 			}
-
+			if (choice == 2)
+			{
+				cout << endl << "Insira o novo valor para a duracao: ";
+				cin >> newduration;
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore();
+					return false;
+				}
+				channels[i].getPrograms()[j].setDuration(newduration);
+				return true;
+			}
+			if (choice == 3)
+			{
+				cout << endl << "Insira o novo valor para o dia: ";
+				cin >> newDay;
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore();
+					return false;
+				}
+				cout << endl << "Insira o novo valor para a hora: ";
+				cin >> newHour;
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore();
+					return false;
+				}
+				cout << endl << "Insira o novo valor para os minutos: ";
+				cin >> newMinutes;
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore();
+					return false;
+				}
+				Date date(newDay, newHour, newMinutes);
+				channels[i].getPrograms()[j].setExhibitionDate(date);
+				return true;
+			}
 		}
 	}
 }
-*/
 
 //Movie CRUD
 
