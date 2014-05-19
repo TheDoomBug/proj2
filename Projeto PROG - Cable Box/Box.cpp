@@ -8,7 +8,7 @@
 #include "Channel.h"
 #include "Date.h"
 
-
+//cenas
 
 // Fim das funcoes auxiliares
 
