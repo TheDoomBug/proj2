@@ -1,9 +1,0 @@
-Canal 1
-Programa 1
-Comedia
-60
-Segunda 8 00
-Programa 2
-Desporto
-120
-Segunda 9 00
