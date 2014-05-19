@@ -1,9 +1,14 @@
 #ifndef _CHANNEL
  #define _CHANNEL
 
-#include<iostream>
-#include<vector>
-#include<string>
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <stdlib.h>
+#include <time.h>
+#include <fstream>
+#include <vector>
+#include <conio.h>
 #include "Program.h"
 
 using namespace std;
@@ -22,9 +27,12 @@ private:
   vector <Program> set_list_programs() const;
 
   bool programOverlap(Program anterior, Program actual, Program seguinte) const;
- 
+  static unsigned int string_to_int(string str);
 
-  
+  void addProg(Program Prog);
+  vector<Program> getPrograms();
+
+
 };
 
 #endif

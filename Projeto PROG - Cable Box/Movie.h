@@ -13,8 +13,8 @@ private:
   float cost;
   unsigned timesRented;
  public:
-  Movie();
   Movie(string title, float cost);
+  Movie(string title, float cost, int seen);
 
   string getTitle() const;
   float getCost() const;

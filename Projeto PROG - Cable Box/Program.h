@@ -18,7 +18,7 @@ private:
   Date exhibitionDate;
 
  public:
-  Program(string name, unsigned int duration, string day, unsigned int hour, unsigned int minutes);
+  Program(string name, string tipo, unsigned int duration, string day, unsigned int hour, unsigned int minutes);
 
   string getName() const;
   string getType() const;

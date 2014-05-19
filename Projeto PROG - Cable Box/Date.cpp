@@ -1,5 +1,8 @@
 #include "Date.h"
 
+unsigned weekday_to_int(string weekDay);
+
+
 Date::Date(string day, unsigned int dateHour, unsigned int dateMinutes){
 
 	weekDay = day;
@@ -22,7 +25,20 @@ unsigned Date::getMinutes() const {
 
 int Date::compareDates(Date date1, Date date2) const{
 
-	if (date1.weekDay > date2.weekDay)		return 1;	else if (date1.weekDay < date2.weekDay)		return -1;	else if (date1.hour > date2.hour)		return -1;	else if (date1.hour < date2.hour)		return 1;	else if (date1.minutes > date2.minutes)		return 1;	else if (date1.minutes < date2.minutes)		return -1;	else return 0;}
+	if (date1.weekDay > date2.weekDay)
+		return 1;
+	else if (date1.weekDay < date2.weekDay)
+		return -1;
+	else if (date1.hour > date2.hour)
+		return -1;
+	else if (date1.hour < date2.hour)
+		return 1;
+	else if (date1.minutes > date2.minutes)
+		return 1;
+	else if (date1.minutes < date2.minutes)
+		return -1;
+	else return 0;
+}
 
 Date Date::addMinutes(Date date, int duration) const{
 	
@@ -78,19 +94,19 @@ unsigned weekday_to_int(string weekDay)
 
 // Funcao que transforma o numero em dia da semana
 
-string int_to_weekday(int weekDay)
+string Date::int_to_weekday(int dia)
 {
-	if (weekDay == 0)
+	if (dia == 0)
 		return "Segunda";
-	else if (weekDay == 1)
+	else if (dia == 1)
 		return "Terca";
-	else if (weekDay == 2)
+	else if (dia == 2)
 		return "Quarta";
-	else if (weekDay == 3)
+	else if (dia == 3)
 		return "Quinta";
-	else if (weekDay == 4)
+	else if (dia == 4)
 		return "Sexta";
-	else if (weekDay == 5)
+	else if (dia == 5)
 		return "Sabado";
 	else
 		return "Domingo";

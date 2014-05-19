@@ -3,9 +3,10 @@
 #include <fstream>
 #include <string>
 
-Program::Program(string programName, unsigned int programDuration, string day, unsigned int hour, unsigned int minutes):exhibitionDate(day, hour, minutes){
+Program::Program(string programName, string tipo, unsigned int programDuration, string day, unsigned int hour, unsigned int minutes):exhibitionDate(day, hour, minutes){
 	name = programName;
 	duration = programDuration;
+	type = tipo;
 	recorded = false;
 }
 

@@ -1,6 +1,12 @@
 #include <iostream>
 #include <cstdlib>
+#include <stdlib.h>
+#include <time.h>
+#include <fstream>
+#include <vector>
+#include <conio.h>
 
+#include "Channel.h"
 #include "Date.h"
 #include "Box.h"
 
@@ -12,11 +18,12 @@ Date currentDate(){
 	int day;
 	int hour;
 	int minutes;
-	Date date("Domingo", hour, minutes);
 
 	day = rand() % 7 + 1;
 	hour = rand() % 24;
 	minutes = rand() % 60;
+
+	Date date("Domingo", hour, minutes);
 
 	if (day == 1)
 		Date date("Segunda", hour, minutes);
@@ -35,7 +42,21 @@ Date currentDate(){
 }
 
 int main(){
-  Box box = Box("?????????", currentDate());
+	srand(time(NULL));
 
-  exit(0);
+	ifstream gen;
+
+
+
+
+	gen.open("general.txt");
+
+	string pass;
+	getline(gen, pass);
+
+	static Box box = Box(pass, currentDate());
+
+	box.Box::menu1();
+
+	exit(0);
 }

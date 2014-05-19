@@ -6,67 +6,132 @@
 #include "Program.h"
 #include "Date.h"
 
-Channel::Channel(string channelName){
-	name = channelName;
-	programs = set_list_programs();
-}
+vector <Program> vecprog(string name);
 
-string Channel::getName() const {
-	return name;
-}
-
-vector<Program> Channel::getPrograms() const {
-	return programs;
-}
-
-vector<Program> Channel::set_list_programs() const{
-	ifstream ficheiro;
-	string nome = "ChannelsList.txt";
-	string name;
-	string duration;
-	string weekDay;
-	string hour;
-	string minutes;
-	vector<Program> vec;
-
-	ficheiro.open(nome.c_str());
-
-	while (getline(ficheiro, name) != "EOC")
-	{
-		getline(ficheiro, duration);
-		getline(ficheiro, weekDay);
-		getline(ficheiro, hour);
-		getline(ficheiro, minutes);
+unsigned int string_to_int(string s);
 
 
-		Program	program(name, string_to_int(duration), weekDay, string_to_int(hour), string_to_int(minutes));
+Channel::Channel(string name)
 
-		vec.push_back(program);
-	}
-
-	getline(ficheiro, name); //Retirar o EOC que marca o fim do canal
-	ficheiro.close();
-
-	return vec;
-}
-
-unsigned int string_to_int(string str)
 {
-	unsigned int n = 0;
-	int s;
-	for (unsigned int i = 0; i < str.size(); i++)
+
+	ifstream canal;
+
+
+	this->name = name;
+
+
+	string nome = name;
+
+
+	programs = vecprog(nome);
+
+}
+
+
+
+
+vector <Program> vecprog(string name)
+
+{
+
+	name += ".txt";
+
+
+	ifstream cria;
+
+	vector <Program> prog;
+
+	string nome;
+
+	string tipo;
+
+	string sdur;
+
+	string shora;
+
+	string smin;
+
+	unsigned int dur;
+
+	string dia;
+
+	unsigned int hora;
+
+	unsigned int min;
+
+
+	cria.open(name);
+
+
+
+	while (!cria.eof())
+
 	{
-		s = str[i] - 48;
-		n = n + s*pow(10, i);
+
+		for (int i = 6; i > 0; i--)
+
+		{
+
+			getline(cria, nome);
+
+			getline(cria, tipo);
+
+			getline(cria, dia);
+
+			getline(cria, shora);
+
+			getline(cria, smin);
+
+			getline(cria, sdur);
+
+
+			dur = string_to_int(sdur);
+
+			min = string_to_int(smin);
+
+			hora = string_to_int(shora);
+
+
+			Program pro = Program(nome, tipo, dur, dia, hora, min);
+
+			prog.push_back(pro);
+
+		}
+
 	}
-	return n;
+
+
+
+	return prog;
+
 }
 
 
-bool Channel::programOverlap(Program anterior, Program actual, Program seguinte) const {
-	if (compareDates(anterior.getExhibitionDate().addMinutes(anterior.getExhibitionDate, anterior.getDuration), actual.getExhibitionDate()) == 1)
-		return true;
-	else if (compareDates(actual.getExhibitionDate().addMinutes(actual.getExhibitionDate, actual.getDuration), seguinte.getExhibitionDate()) == 1)
-		return true;
-	else return false;
+vector<Program> Channel::getPrograms()
+
+{
+
+	return programs;
+
 }
+
+
+
+string Channel::getName() const
+{
+
+	return name;
+
+}
+
+
+
+void Channel::addProg(Program Prog)
+{
+
+	programs.push_back(Prog);
+
+}
+
+

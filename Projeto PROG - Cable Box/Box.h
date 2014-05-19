@@ -52,6 +52,10 @@ class Box{
   bool removeMovie();
   bool updateMovie();
 
+  void menu1();
+  void menutv();
+  void menuvideo();
+  void canais();
 };
 
 #endif

@@ -7,9 +7,17 @@
 using namespace std;
 
 Movie::Movie(string movieTitle, float movieCost) {
-	
+
 	title = movieTitle;
 	cost = movieCost;
+	timesRented = 0;
+}
+
+Movie::Movie(string title, float cost, int seen)
+{
+	this->title = title;
+	this->cost = cost;
+	timesRented = seen;
 	timesRented = 0;
 }
 
@@ -23,6 +31,11 @@ float Movie::getCost() const{
 
 void Movie::setTimesRented(unsigned int t) {
 	timesRented = t;
+}
+
+unsigned Movie::getTimesRented() const
+{
+	return timesRented;
 }
 
 
