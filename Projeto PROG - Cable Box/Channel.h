@@ -30,7 +30,6 @@ private:
   static unsigned int string_to_int(string str);
 
   void addProg(Program Prog);
-  vector<Program> getPrograms();
 
 
 };

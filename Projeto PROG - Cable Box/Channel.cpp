@@ -108,8 +108,7 @@ vector <Program> vecprog(string name)
 }
 
 
-vector<Program> Channel::getPrograms()
-
+vector<Program> Channel::getPrograms() const
 {
 
 	return programs;

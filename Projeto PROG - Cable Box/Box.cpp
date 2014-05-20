@@ -52,7 +52,7 @@ vector<Program> Box::listByDay(string day) const {
 	vector<Program> vec;
 
 	for (unsigned i = 0; i < channels.size(); i++)
-	for (unsigned j = 0; j < channels[i].getPrograms.size(); j++)
+	for (unsigned j = 0; j < channels[i].getPrograms().size(); j++)
 	if (channels[i].getPrograms()[j].getExhibitionDate().getDay() == day)
 		vec.push_back(channels[i].getPrograms()[j]);
 
@@ -65,7 +65,7 @@ vector<Program> Box::listByChannel(string channel, string day) const {
 	for (unsigned i = 0; i < channels.size(); i++)
 	if (channels[i].getName() == channel)
 	{
-		for (unsigned j = 0; i < channels[i].getPrograms.size(); i++)
+		for (unsigned j = 0; i < channels[i].getPrograms().size(); i++)
 		if (day == "NULL" || channels[i].getPrograms()[j].getExhibitionDate().getDay() == day)
 			vec.push_back(channels[i].getPrograms()[j]);
 	}
