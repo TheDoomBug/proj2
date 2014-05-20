@@ -22,6 +22,8 @@ void printbox(string titul);
 void rdc(string cenas);
 void rdc2(string cenas, int x);
 unsigned int string_to_int(string str);
+void showDays();
+void show_inf_Prog(Program prog);
 
 Box::Box(string passwd, Date date) :currentDate(date){
 	password = passwd;
@@ -525,7 +527,7 @@ void rdc2(string cenas, int x)
 {
 	string ind = "(";
 	ind += int_to_string(x);
-	ind += ") - ";
+	ind += ") ";
 	ind += cenas;
 
 	int tam = ind.length();
@@ -567,13 +569,13 @@ void Box::menutv()
 
 	char c;
 
-	rdc("(1) Guia TV");
+	rdc("(1) Guide");
 	cout << '\n';
-	rdc("(2) Canais");
+	rdc("(2) CHannels");
 	cout << '\n';
-	rdc("(3) Tipo");
+	rdc("(3) Type");
 	cout << '\n';
-	rdc("(0) Menu anterior");
+	rdc("(0) Previous");
 
 	c = _getch();
 
@@ -592,11 +594,11 @@ void Box::menuvideo()
 
 	char c;
 
-	rdc("(1) Alugar");
+	rdc("(1) List");
 	cout << '\n';
-	rdc("(2) Alugados");
+	rdc("(2) Seen Movies");
 	cout << '\n';
-	rdc("(0) Menu anterior");
+	rdc("(0) Previous");
 
 	c = _getch();
 
@@ -640,18 +642,25 @@ void Box::canais()
 		cout << '\n';
 	}
 
+	//escolha do canal
 	char c;
 	int n;
 	stringstream ss;
-
 	c = _getch();
-
 	ss << c;
 	ss >> n;
 
-	cout << n;
+	//escolha do dia
+	system("cls");
+	printbox("tvascii.txt");
+	showDays();
+	int d;
+	c = _getch();
+	ss << c;
+	ss >> d;
 
-
+	//abre o menu que mostra os programas de um certo canal e dia
+	Dias_canal(listByChannel(channels.at(n-1).getName, Date::int_to_weekday(d));
 }
 
 string int_to_string(int n)
@@ -692,4 +701,68 @@ unsigned int string_to_int(string str)
 	}
 
 	return n;
+}
+
+void Box::Dias_canal(vector<Program> canal)
+{
+	printbox("tvascii.txt");
+
+	for (int i = 1; i <= canal.size(); i++)
+		rdc2(canal.at(i - 1).getName(), i);
+
+	char c;
+	int n;
+	stringstream ss;
+	c = _getch();
+	ss << c;
+	ss >> n;
+
+	show_inf_Prog(Program prog);
+}
+
+void showDays()
+{
+	vector <string> semana = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+	for (int i = 1; i <= 7; i++)
+		rdc2(semana.at(i - 1), i);
+}
+
+void show_inf_Prog(Program prog)
+{
+	rdc(prog.getName());
+	cout << '\n';
+	cout << '\t' << prog.getType();
+
+	string data = prog.getExhibitionDate().getDay();
+	cout << '\t' << data << "   " << prog.getExhibitionDate().getHour();
+	cout << ":" << prog.getExhibitionDate().getMinutes();
+
+	Date acaba = prog.getExhibitionDate().addMinutes(prog.getExhibitionDate(), prog.getDuration());
+
+	cout << " - " << acaba.getHour() << ":" << acaba.getMinutes() << '\n';
+
+	if (prog.isRec())
+		cout << '\t' << "Recorded" << '\n';
+	else
+		cout << '\t' << "1 to Record" << '\n';
+
+	cout << '\n' << "(0) Previous";
+
+
+}
+
+bool Box::testPass()
+{
+	string pass;
+	
+	system("cls");
+	cout << '\n' << '\t' << '\t' << '\t' << '\t' << "LOGIN";
+	cout << '\n' << '\t' << '\t' << '\t' << '\t' << "Password: ";
+	cin >> pass;
+
+	if (pass == password)
+		return true;
+	else
+		return false;
 }

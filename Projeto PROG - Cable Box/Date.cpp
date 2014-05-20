@@ -76,38 +76,40 @@ bool Date::sameDate(Date date1, Date date2) const {
 
 unsigned weekday_to_int(string weekDay)
 {
-	if (weekDay == "Segunda")
-		return 0;
-	else if (weekDay == "Terca")
+	if (weekDay == "Monday")
 		return 1;
-	else if (weekDay == "Quarta")
+	else if (weekDay == "Tuesday")
 		return 2;
-	else if (weekDay == "Quinta")
+	else if (weekDay == "Wednesday")
 		return 3;
-	else if (weekDay == "Sexta")
+	else if (weekDay == "Thursday")
 		return 4;
-	else if (weekDay == "Sabado")
+	else if (weekDay == "Friday")
 		return 5;
-	else
+	else if (weekDay == "Saturday")
 		return 6;
+	else if (weekDay == "Sunday")
+		return 7;
+	else
+		return -1;
 }
 
 // Funcao que transforma o numero em dia da semana
 
 string Date::int_to_weekday(int dia)
 {
-	if (dia == 0)
-		return "Segunda";
-	else if (dia == 1)
-		return "Terca";
+	if (dia == 1)
+		return "Monday";
 	else if (dia == 2)
-		return "Quarta";
+		return "Tuesday";
 	else if (dia == 3)
-		return "Quinta";
+		return "Wednesday";
 	else if (dia == 4)
-		return "Sexta";
+		return "Thursday";
 	else if (dia == 5)
-		return "Sabado";
-	else
-		return "Domingo";
+		return "Friday";
+	else if (dia == 6)
+		return "Saturday";
+	else if (dia == 7)
+		return "Sunday";
 }

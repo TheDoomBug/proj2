@@ -29,6 +29,10 @@ Date Program::getExhibitionDate() const{
 	return exhibitionDate;
 }
 
+bool Program::isRec() const{
+	return recorded;
+}
+
 void Program::setName(string newname) {
 	name = newname;
 }

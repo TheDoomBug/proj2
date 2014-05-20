@@ -56,6 +56,9 @@ class Box{
   void menutv();
   void menuvideo();
   void canais();
+  void Dias_canal(vector<Program> canal);
+  bool testPass();
+  string getPassword();
 };
 
 #endif

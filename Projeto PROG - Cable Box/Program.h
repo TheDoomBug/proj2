@@ -24,6 +24,7 @@ private:
   string getType() const;
   int getDuration() const;
   Date getExhibitionDate() const;
+  bool isRec() const;
 
   void setRecorded();
   void setName(string newname);
