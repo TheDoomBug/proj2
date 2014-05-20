@@ -13,6 +13,8 @@
 #include "Channel.h"
 #include "Date.h"
 
+using namespace std;
+
 vector <Channel> vecchan(int n);
 vector <Movie> vecmov(int n);
 vector <Movie> vecseen(int n);
@@ -68,7 +70,7 @@ vector<Program> Box::listByChannel(string channel, string day) const {
 	if (channels[i].getName() == channel)
 	{
 		for (unsigned j = 0; i < channels[i].getPrograms().size(); i++)
-		if (day == "NULL" || channels[i].getPrograms()[j].getExhibitionDate().getDay() == day)
+		if (day == "NULL" || channels[i].getPrograms()[j].getExhibitionDate().getDay() == day) // Se o dia nao for dado, day = NULL
 			vec.push_back(channels[i].getPrograms()[j]);
 	}
 	return vec;
@@ -80,7 +82,7 @@ vector<Program> Box::listByType(string type, string day) const {
 	for (unsigned i = 0; i < channels.size(); i++)
 	for (unsigned j = 0; j < channels[i].getPrograms().size(); j++)
 	if (channels[i].getPrograms()[j].getType() == type)
-	if (day == "NULL" || channels[i].getPrograms()[j].getExhibitionDate().getDay() == day)
+	if (day == "NULL" || channels[i].getPrograms()[j].getExhibitionDate().getDay() == day) // Se o dia nao for dado, day = NULL
 		vec.push_back(channels[i].getPrograms()[j]);
 
 	return vec;
@@ -237,7 +239,7 @@ bool Box::changePassword() {
 
 // Channel CRUD
 
-bool Box::createdChanel() {
+bool Box::createdChannel() {
 
 	string newchannel;
 
@@ -250,7 +252,7 @@ bool Box::createdChanel() {
 	return true;
 }
 
-bool Box::removeChanel() {
+bool Box::removeChannel() {
 
 	string removedChannel;
 
@@ -266,15 +268,51 @@ bool Box::removeChanel() {
 	return false;
 }
 
-//Por fazer
-bool Box::updateChanel(){
-	return false;
+bool Box::updateChannel(){
+
+	int choice;
+	string channelName;
+	string newName;
+
+	cout << "O que pretende alterar? ";
+	cout << endl << endl << "1- Nome";
+	cout << endl << "0- Menu anterior";
+	cin >> choice;
+
+	if (choice != 1 || cin.fail())
+	{
+		cout << "Hipotese invalida!";
+		cin.clear();
+		cin.ignore();
+		return false;
+	}
+
+	if (choice == 0)
+		return true;
+
+	cout << endl << "Insira o nome do filme que pretende fazer alteracoes (case-sensitive): ";
+	cin >> channelName;
+
+
+	for (unsigned int i = 0; i < movieClub.size(); i++)
+	{
+		if (channels[i].getName() == channelName)
+		{
+			cout << endl << "Insira o novo nome do canal: ";
+			cin >> newName;
+			channels[i].set_name(newName);
+			return true;
+		}
+
+		cout << endl << "Canal nao encontrado!";
+		return false;
+	}
 }
 
 
 //Program CRUD
 
-/*bool Box::createdProgram(string channel){
+bool Box::createdProgram(string channel) {
 
 	string newprogram;
 	unsigned duration;
@@ -313,19 +351,36 @@ bool Box::updateChanel(){
 		{
 			for (unsigned j = 0; i < channels[i].getPrograms().size(); i++) // Percorre todos os programas desse canal...
 			{
-				// Falta fazer condicao para primeiro e ultimo elemento do vetor
-				if (channels[i].programOverlap(channels[i].getPrograms()[j - 1], channels[i].getPrograms()[j], channels[i].getPrograms()[j + 1]))
-							{
-								// Verifica se o programa se sobrepoe ao programa seguinte...
-								cout << endl << "Ha sobreposicao de programas!";
-							}
-				else channels[i].getPrograms().insert(channels[i].getPrograms().begin() + j, program); // Nao ha problema nenhum, podemos inserir o programa!
-						}
+				if (compareDates(date, channels[i].getPrograms()[j].getExhibitionDate) != 1) // ... ate encontrar a posicao dele na programacao
+				{
+					if (j = 0 && channels[i].programOverlap(channels[i].getPrograms()[j], channels[i].getPrograms()[j + 1]))
+					{
+						// Se for o 1o na programacao, vai analisar se se sobrepoe ao segundo
+						cout << endl << "Ha sobreposicao de programas!";
+						return false;
 					}
+					else if (j = (channels[i].getPrograms().size() - 1) && channels[i].programOverlap(channels[i].getPrograms()[j - 1], channels[i].getPrograms()[j]))
+					{
+						// Se for o ultimo elemento da programacao, vai analisar se se sobrepoe ao penultimo
+						cout << endl << "Ha sobreposicao de programas!";
+						return false;
+					}
+					else if (channels[i].programOverlap(channels[i].getPrograms()[j], channels[i].getPrograms()[j + 1]) || channels[i].programOverlap(channels[i].getPrograms()[j - 1], channels[i].getPrograms()[j])) // Testa se ha sobreposicao
+					{
+						// Se nao for nenhum dos extremos, vai analisar se se sobrepoe ao anterior ou ao seguinte
+						cout << endl << "Ha sobreposicao de programas!";
+						return false;
+					}
+					else {
+						channels[i].getPrograms().insert(channels[i].getPrograms().begin() + j, program);
+						// Nao ha problema nenhum, podemos inserir o programa!
+						return true;
+					}
+				}
+			}
+		}
 	}
-
-	return true;
-}*/
+}
 
 bool Box::removeProgram() {
 
@@ -362,20 +417,24 @@ bool Box::updateProgram()
 	cout << endl << "0- Cancelar alteracao";
 	cin >> choice;
 
+	if ((choice != 1 && choice != 2 && choice != 3) || cin.fail())
+	{
+		cout << "Hipotese invalida!";
+		cin.clear();
+		cin.ignore();
+		return false;
+	}
+
+	if (choice == 0)
+		return true;
+
 	cout << endl << "Insira o nome do canal do programa que pretende fazer alteracoes (case-sensitive): ";
 	cin >> channelName;
 
 	cout << endl << "Insira o nome do programa que pretende fazer alteracoes (case-sensitive): ";
 	cin >> oldName;
 
-	if (cin.fail()) {
-		cin.ignore();
-		cin.clear();
-		return false;
-	}
-	else if (choice == 0)
-		return true;
-	else for (unsigned i = 0; i < channels.size(); i++)
+	for (unsigned i = 0; i < channels.size(); i++)
 	if (channels[i].getName() == channelName)
 	for (unsigned j = 0; j < channels[i].getPrograms().size(); j++) {
 		if (channels[i].getPrograms()[j].getName() == oldName) {
@@ -383,12 +442,6 @@ bool Box::updateProgram()
 			{
 				cout << endl << "Insira o novo nome do canal: ";
 				cin >> newName;
-				if (cin.fail())
-				{
-					cin.clear();
-					cin.ignore();
-					return false;
-				}
 				channels[i].getPrograms()[j].setName(newName);
 				return true;
 			}
@@ -437,6 +490,8 @@ bool Box::updateProgram()
 			}
 		}
 	}
+	cout << endl << "Canal/Programa nao encontrado!";
+	return false;
 }
 
 //Movie CRUD
@@ -474,6 +529,66 @@ bool Box::removeMovie() {
 	return false;
 }
 
+bool Box::updateMovie()
+{
+	int choice;
+	string movieName;
+	string newName;
+	float newCost;
+
+	cout << "O que pretende alterar? ";
+	cout << endl << endl << "1- Nome";
+	cout << endl << "2- Preco";
+	cout << endl << "0- Menu anterior";
+	cin >> choice;
+
+	if ((choice != 1 && choice != 2) || cin.fail())
+	{
+		cout << "Hipotese invalida!";
+		cin.clear();
+		cin.ignore();
+		return false;
+	}
+
+	if (choice == 0)
+		return true;
+
+	cout << endl << "Insira o nome do filme que pretende fazer alteracoes (case-sensitive): ";
+	cin >> movieName;
+
+
+	for (unsigned int i = 0; i < movieClub.size(); i++)
+	{
+		if (movieClub[i].getTitle == movieName)
+		{
+			if (choice == 1)
+			{
+				cout << endl << "Insira o novo nome do filme: ";
+				cin >> newName;
+				movieClub[i].setTitle(newName);
+				return true;
+			}
+
+			if (choice == 2)
+			{
+				cout << endl << "Insira o novo preco do filme: ";
+				cin >> newCost;
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore();
+					return false;
+				}
+				movieClub[i].setCost(newCost);
+				return true;
+			}
+		}
+	}
+
+	cout << endl << "Filme nao encontrado!";
+	return false;
+}
+
 // Coloca num vetor todos os filmes num videoclube
 vector<Movie> Box::get_list_movies() const
 {
@@ -504,8 +619,6 @@ vector<Movie> Box::get_list_movies() const
 
 	return vec;
 }
-
-
 
 bool Box::insert_rented_movie(Movie movie){
 	seenMovies.push_back(movie);

@@ -29,9 +29,19 @@ float Movie::getCost() const{
 	return cost;
 }
 
+void Movie::setTitle(string newTitle) {
+	title = newTitle;
+}
+
+void Movie::setCost(float newCost) {
+	cost = newCost;
+}
+
 void Movie::setTimesRented(unsigned int t) {
 	timesRented = t;
 }
+
+
 
 unsigned Movie::getTimesRented() const
 {

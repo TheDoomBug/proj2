@@ -1,7 +1,7 @@
 #ifndef _MOVIE
  #define _MOVIE
 
-#include<iostream>
+#include <string>
 
 using namespace std;
 
@@ -20,6 +20,8 @@ private:
   float getCost() const;
   unsigned getTimesRented() const;
 
+  void setTitle(string newTitle);
+  void setCost(float newCost);
   void setTimesRented(unsigned int t);
 };
 

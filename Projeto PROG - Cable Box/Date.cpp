@@ -25,14 +25,16 @@ unsigned Date::getMinutes() const {
 
 int Date::compareDates(Date date1, Date date2) const{
 
+	// Se date1 vier antes de date2, retorna -1. Se vierem ao mesmo tempo, retorna 0. Se vier depois, retorna 1
+
 	if (date1.weekDay > date2.weekDay)
 		return 1;
 	else if (date1.weekDay < date2.weekDay)
 		return -1;
 	else if (date1.hour > date2.hour)
-		return -1;
-	else if (date1.hour < date2.hour)
 		return 1;
+	else if (date1.hour < date2.hour)
+		return -1;
 	else if (date1.minutes > date2.minutes)
 		return 1;
 	else if (date1.minutes < date2.minutes)
@@ -40,7 +42,7 @@ int Date::compareDates(Date date1, Date date2) const{
 	else return 0;
 }
 
-Date Date::addMinutes(Date date, int duration) const{
+Date Date::addMinutes(Date date, int duration){
 	
 	int minutes = date.minutes + duration;
 	int hour = date.hour;

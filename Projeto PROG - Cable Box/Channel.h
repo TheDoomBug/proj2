@@ -24,9 +24,10 @@ private:
   string getName() const;
   vector<Program> getPrograms() const;
 
-  vector <Program> set_list_programs() const;
+  vector <Program> set_list_programs();
+  void set_name(string newname);
 
-  bool programOverlap(Program anterior, Program actual, Program seguinte) const;
+  bool programOverlap(Program program1, Program program2) const;
   static unsigned int string_to_int(string str);
 
   void addProg(Program Prog);

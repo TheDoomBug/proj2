@@ -40,9 +40,9 @@ class Box{
   int timesWatched(string title) const;
   bool changePassword();          // ask, verify and change the password
   // Channel CRUD
-  bool createdChanel();
-  bool removeChanel();
-  bool updateChanel();
+  bool createdChannel();
+  bool removeChannel();
+  bool updateChannel();
   // Program CRUD
   bool createdProgram(string channel);
   bool removeProgram();
